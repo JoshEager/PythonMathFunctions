@@ -1,13 +1,13 @@
 from KnownTrig import known_sin, known_cos, known_sinx_dict
 from Factorial import factorial
 
-def sin(radians: float, guess: float=0, terms: int=12) -> float:
+def sin(radians: float, closest_known_value: float=0, terms: int=24) -> float:
     """
     Taylor series approximation for sin. The taylor series says that any differentiable function can be represented approximately as a 
     polynomial with Sigma(n=0, n=inf, (f^n(a)/n!)(x-a)^n) where 'a' is the x coordinate where your approximation will be the closest to the 
     real value of sin. For general use, it is okay to use zero as long as you have enough terms, as it will be very close unless you are using
     a number with a very large magnitude. Really, you can only use a value of 'a' that has a known sin value (like 0, pi/6, pi/3, pi/2, etc).
-    This function supports the use of any sin value on the unit circle for your 'a' value. You control the value of 'a' by using the guess 
+    This function supports the use of any sin value on the unit circle for your 'a' value. You control the value of 'a' by using the closest_known_value 
     parameter, but that isn't necessary unless you're using values that would be out of the reasonable range of precision provided by your terms. 
 
     """
@@ -16,8 +16,11 @@ def sin(radians: float, guess: float=0, terms: int=12) -> float:
     acceptable_guesses = [radian_measure for radian_measure in known_sinx_dict.keys()]
     def badGuess() -> None:
         raise ValueError("Bad Guess for sinx! Must be a multiple of something on the unit circle!")      
-    a = guess if guess in acceptable_guesses else badGuess()
-      
+    a = closest_known_value if closest_known_value in acceptable_guesses else badGuess()
+
+    # Automatically give known values if the radian is in the table of known values
+    if radians in known_sinx_dict.keys():
+        return known_sinx_dict[radians]
 
     # Computing the sigma
     sinx: float = 0
