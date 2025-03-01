@@ -42,12 +42,14 @@ known_cosx_dict = {
 }
 
 def known_sin(x: float) -> float:
+    """ Sine function that only works for known values """
     try: 
         return known_sinx_dict[x]
     except KeyError:
         raise ValueError("Tried to reference a known sin value that was not actuallly known!")
     
 def known_cos(x: float) -> float:
+    """ Cosine function that only works for known values """
     try: 
         return known_cosx_dict[x]
     except KeyError:
