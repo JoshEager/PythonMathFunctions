@@ -13,7 +13,7 @@ def sin(radians: float, guess: float=0, terms: int=12) -> float:
     """
     
     # Validate the guess
-    acceptable_guesses = [key for key, value in known_sinx_dict.items()]
+    acceptable_guesses = [radian_measure for radian_measure in known_sinx_dict.keys()]
     def badGuess() -> None:
         raise ValueError("Bad Guess for sinx! Must be a multiple of something on the unit circle!")      
     a = guess if guess in acceptable_guesses else badGuess()
